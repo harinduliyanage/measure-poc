@@ -14,7 +14,7 @@ type Props = {
   navigation: Navigation;
 };
 
-const SigninScreen = ({ navigation }: Props) => {
+const SignupScreen = ({ navigation }: Props) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SigninScreen;
+export default SignupScreen;

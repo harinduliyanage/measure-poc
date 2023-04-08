@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('Signin')} />
+      <BackButton goBack={() => navigation.navigate('Signup')} />
 
       <Logo />
 
