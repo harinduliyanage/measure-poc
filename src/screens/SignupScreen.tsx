@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
+import { confirmPasswordValidator, emailValidator, passwordValidator } from '../core/utils';
 import { Navigation } from '../types';
 
 type Props = {
@@ -15,16 +15,19 @@ type Props = {
 };
 
 const SignupScreen = ({ navigation }: Props) => {
+  
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-
+  const [confirmPassword , setConfirmPassword] = useState({value: '', error: ''})
+  
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-
-    if (emailError || passwordError) {
+    const confirmPasswordError = confirmPasswordValidator(password.value , confirmPassword.value);
+    if (emailError || passwordError || confirmPasswordError) {
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
+      setConfirmPassword({ ...confirmPassword, error: confirmPasswordError });
       return;
     }
 
@@ -34,7 +37,6 @@ const SignupScreen = ({ navigation }: Props) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('Home')} />
 
       <Logo />
 
@@ -66,22 +68,24 @@ const SignupScreen = ({ navigation }: Props) => {
         secureTextEntry
       />
 
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-        >
-          <Text style={styles.label}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
+    <TextInput
+        label="Confirm Password"
+        returnKeyType="done"
+        value={confirmPassword.value}
+        onChangeText={text => setConfirmPassword({ value: text, error: '' })}
+        error={!!confirmPassword.error}
+        errorText={confirmPassword.error}
+        secureTextEntry
+      />
 
       <Button mode="contained" onPress={_onLoginPressed}>
-        Login
+      Let's do this!
       </Button>
 
       <View style={styles.row}>
-        <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-          <Text style={styles.link}>Sign up</Text>
+        <Text style={styles.label}>I already have an account </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.link}>Log In</Text>
         </TouchableOpacity>
       </View>
     </Background>
@@ -89,11 +93,6 @@ const SignupScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
   row: {
     flexDirection: 'row',
     marginTop: 4,

@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('Signup')} />
+      {/* <BackButton goBack={() => navigation.navigate('Signup')} /> */}
 
       <Logo />
 
@@ -79,7 +79,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
